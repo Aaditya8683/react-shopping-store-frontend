@@ -11,6 +11,10 @@ import { makePaymentRequest } from "../../utils/api";
 const Cart = ({ setShowCart }) => {
     const navigate = useNavigate();
     const { cartItems, cartSubtotal } = useContext(Context);
+    const returnToShop = ({returnToHome}) => {
+        navigate("/");
+        setShowCart(returnToHome);
+    };
 
     const stripePromise = loadStripe(
         process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY
@@ -44,7 +48,7 @@ const Cart = ({ setShowCart }) => {
                 {!cartItems?.length && <div className="empty-cart">
                     <BsCartX />
                     <span>No products in the cart.</span>
-                    <button className="return-cta" onClick={() => {navigate("/"), setShowCart(false)}}>RETURN TO SHOP</button>
+                    <button className="return-cta" onClick={() => returnToShop(false)}>RETURN TO SHOP</button>
                 </div>}
 
                 {!!cartItems?.length &&<>
